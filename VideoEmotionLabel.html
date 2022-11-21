@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Video Emotion labeling</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/6ec3c90698.js" crossorigin="anonymous"></script>
+    <style>
+        .floating-block {
+            background: rgba(153, 205, 50, 0.99);
+            color: white;
+            width: 708px;
+            z-index: 100;
+            position: fixed;
+            top: 330px;
+            height: 50px;
+        }
+    </style>
+</head>
+
+<body class="container" style="margin: 10px; max-width: 1400px">
+    <div class="floating-block1"></div>
+    <div class="row">
+        <div class="col">
+            <div class="form-row" style="margin-bottom:10px ;">
+                <div class="col-2">
+                    <span>
+                        YouTube ID：</span>
+                </div>
+                <div class="col-4">
+                    <input type="text" value="T_uFMQGCZYg" class="form-control" id="ytid">
+                </div>
+                <div class="col-4">
+                    <button type="button" class="btn btn-secondary" onclick="loadYoutubeVideo();">
+                        Load
+                    </button>
+
+                </div>
+            </div>
+            <!-- <div><button class="btn btn-sm btn-secondary" style="margin: 3px;" onclick="loadYoutubeVideo();">Load</button></div> -->
+            <div id="player"></div>
+            <div id="timeline-tooltip" style="height: 480px;"></div>
+        </div>
+
+        <div class="col">
+            <div style="margin-top: 10px" id="list-item">
+                <div class="form-group">
+                    <div class="form-row" style="margin-bottom: 5px">
+                        <div class="col-1">
+                            <button type="button" class="btn btn-outline-info btn-sm" onclick="set_label(this);">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </div>
+                        <div class="col-3">
+                            <label id="start_label">start</label>
+                        </div>
+                        <div class="col-1">
+                            <button type="button" class="btn btn-outline-info btn-sm" onclick="set_label(this);">
+                                <i class="fas fa-sign-in-alt"></i>
+                            </button>
+                        </div>
+                        <div class="col-5">
+                            <label id="end_label">end</label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-10">
+                            <input type="text" class="form-control" id="emotion_type" />
+                        </div>
+                        <div class="col-2">
+                            <button type="button" class="btn btn-success" onclick="add_label();">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger" onclick="clear_label();">
+                                <i class="fas fa-eraser"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <!-- ['Angry','Disgust', 'Fear', 'Happy','Neutral','Sad','Surprise'] -->
+                        <div class="col-12" style="margin:5px ;">
+                            <button type="button" class="btn btn-outline-primary btn-sm" style="width:75px;"
+                                onclick="set_emotion(this);">
+                                Angry
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-sm" style="width:75px;"
+                                onclick="set_emotion(this);">
+                                Disgust
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-sm" style="width:75px;"
+                                onclick="set_emotion(this);">
+                                Fear
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-sm" style="width:75px;"
+                                onclick="set_emotion(this);">
+                                Happy
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-sm" style="width:75px;"
+                                onclick="set_emotion(this);">
+                                Sad
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-sm" style="width:75px;"
+                                onclick="set_emotion(this);">
+                                Surprise
+                            </button>
+                            <button type="button" class="btn btn-outline-primary btn-sm" style="width:75px;"
+                                onclick="set_emotion(this);">
+                                Neutral
+                            </button>
+                        </div>
+
+                    </div>
+                    <div class="form-row" style="margin-top:25px;">
+                        <div class="col-10">
+                            <h3>Label List</h3>
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">start</th>
+                                        <th scope="col">end</th>
+                                        <th scope="col">type</th>
+                                        <th scope="col">action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="row_data">
+
+
+                                </tbody>
+                            </table>
+                            <button class="btn btn-primary" onclick="export_json();">Export JSON</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['timeline'] });
+    google.charts.setOnLoadCallback(draw_chart);
+
+    function draw_chart() {
+        var container = document.getElementById('timeline-tooltip');
+        var chart = new google.visualization.Timeline(container);
+        var dataTable = new google.visualization.DataTable();
+
+        dataTable.addColumn({ type: 'string', id: 'Type' });
+        dataTable.addColumn({ type: 'string', role: 'tooltip' });
+        dataTable.addColumn({ type: 'date', id: 'Start' });
+        dataTable.addColumn({ type: 'date', id: 'End' });
+
+        let its = document.getElementById('row_data').getElementsByTagName('tr');
+        let rows = [];
+        for (let elt of its) {
+            let start = elt.getElementsByTagName('td')[0].textContent;
+            let start_info = start.split(':');
+            let end = elt.getElementsByTagName('td')[1].textContent;
+            let end_info = end.split(':');
+            let etype = elt.getElementsByTagName('td')[2].textContent;
+
+            let tlist = text_to_list(etype);
+
+            for (let it of tlist) {
+                rows.push(
+                    [it, it,
+                        new Date(0, 0, 0, 0, parseInt(start_info[0]), parseFloat(start_info[1])),
+                        new Date(0, 0, 0, 0, parseInt(end_info[0]), parseFloat(end_info[1]))]
+                );
+            }
+
+        }
+
+        if (rows.length > 0) {
+            dataTable.addRows(rows);
+            chart.draw(dataTable);
+        }
+    }
+
+    /////////////////////////////////////////////////////
+    // youtuber player
+    /////////////////////////////////////////////////////
+    var stoptime = 5;
+    var player;
+    var ytid;
+    // 2. This code loads the IFrame Player API code asynchronously.
+    function loadYoutubeVideo() {
+        var tag = document.createElement("script");
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName("script")[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        ytid = document.getElementById('ytid').value;
+    }
+
+    // 3. This function creates an <iframe> (and YouTube player)
+    //    after the API code downloads.
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player("player", {
+            height: "398",
+            width: "707",
+            videoId: ytid,
+            events: {
+                onReady: onPlayerReady,
+                onStateChange: onPlayerStateChange,
+            },
+        });
+    }
+
+    // 4. The API will call this function when the video player is ready.
+    function onPlayerReady(event) {
+        event.target.seekTo(1);
+        //event.target.playVideo();
+    }
+
+    // 5. The API calls this function when the player's state changes.
+    //    The function indicates that when playing a video (state=1),
+    //    the player should play for six seconds and then stop.
+    var done = false;
+
+    function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+            setTimeout(stopVideo, stoptime * 1000);
+            done = true;
+        }
+        console.log(event.data + "==>" + player.getCurrentTime().toFixed(2) + "==>" + new Date().getTime());
+    }
+
+    function stopVideo() {
+        //player.stopVideo();
+        player.pauseVideo();
+    }
+
+    function seek(ss, stops) {
+        player.playVideo();
+        player.seekTo(ss);
+        setTimeout(stopVideo, stops * 1000);
+    }
+
+    function set_label(elt) {
+        var t = elt.parentElement.nextElementSibling;
+
+        var sec = player.getCurrentTime().toFixed(2);
+        var min = Math.floor(sec / 60);
+        sec = sec % 60;
+        if (sec < 10) {
+            sec = "0" + sec;
+        }
+        t.children[0].textContent = min + ":" + sec;
+    }
+
+    function text_to_list(txt_list) {
+        let tks = txt_list.split(',');
+        let list = [];
+        for (let item of tks) {
+            item = item.trim();
+            if (list.indexOf(item) < 0 && item.length > 0) {
+                list.push(item);
+            }
+        }
+        return list;
+    }
+
+    function revise_list(txt_list) {
+
+
+        let list = text_to_list(txt_list);
+
+        let result = '';
+        for (let item of list) {
+            if (result.length == 0) {
+                result = item;
+            } else {
+                result = result + ',' + item;
+            }
+        }
+
+        return result;
+
+    }
+
+    function set_emotion(elt) {
+        // console.log(elt);
+        let t = elt.textContent.trim();
+        let t2 = document.getElementById('emotion_type').value + ',' + t;
+        document.getElementById('emotion_type').value = revise_list(t2);
+    }
+
+    function remove_item(elt) {
+        let trElt = elt.parentElement.parentElement;
+        trElt.remove();
+        save_rowdata();
+        save_ytid();
+        draw_chart();
+
+    }
+
+    function clear_label() {
+        document.getElementById('emotion_type').value = '';
+    }
+
+    function add_label() {
+        var sl = document.getElementById("start_label").textContent;
+        var el = document.getElementById("end_label").textContent;
+        var text = document.getElementById("emotion_type").value;
+
+        let row = `<tr><td>${sl}</td><td>${el}</td><td>${text}</td><td><button type="button" class="btn btn-danger btn-sm" onclick="remove_item(this);"><i class="fas fa-trash"></i></button></td></tr>`;
+        let elt = document.getElementById('row_data');
+        elt.innerHTML = elt.innerHTML + row;
+
+        save_rowdata();
+        save_ytid();
+        draw_chart();
+    }
+
+    function save_rowdata() {
+        let saveContent = document.getElementById('row_data').innerHTML
+        localStorage.setItem('row_data', saveContent);
+
+    }
+    function load_rowdata() {
+        let row_data = localStorage.getItem('row_data');
+        if (row_data != null) {
+            document.getElementById('row_data').innerHTML = row_data;
+        }
+    }
+    function save_ytid() {
+        let saveContent = document.getElementById('ytid').value;
+        localStorage.setItem('ytid', saveContent);
+    }
+    function load_ytid() {
+        ytid = localStorage.getItem('ytid');
+        if (ytid != null) {
+            document.getElementById('ytid').value = ytid;
+        }
+    }
+
+    function export_json() {
+        let its = document.getElementById('row_data').getElementsByTagName('tr');
+        let rows = [];
+
+        if (its != undefined) {
+            let jsonObjs = { 'ytid': ytid, 'labels': [] };
+            for (let elt of its) {
+
+                let start = elt.getElementsByTagName('td')[0].textContent;
+                let start_info = start.split(':');
+                let end = elt.getElementsByTagName('td')[1].textContent;
+                let end_info = end.split(':');
+                let etype = elt.getElementsByTagName('td')[2].textContent;
+                // rows.push(
+                //     [etype, etype,
+                //         new Date(0, 0, 0, 0, parseInt(start_info[0]), parseFloat(start_info[1])),
+                //         new Date(0, 0, 0, 0, parseInt(end_info[0]), parseFloat(end_info[1]))]
+                // );
+                jsonObjs.labels.push({
+                    stime: start,
+                    etime: end,
+                    emotion: etype
+                });
+            }
+
+            let data = JSON.stringify(jsonObjs);
+            let type = "application/json";
+            let name = ytid + '_export.json';
+            let blob = new Blob([data], { type });
+            let url = window.URL.createObjectURL(blob);
+
+            let link = document.createElement("a");
+            link.download = name;
+            link.href = url;
+            link.click();
+
+            window.URL.revokeObjectURL(url);
+
+        }
+    }
+
+    /////////////////////////////
+    load_rowdata();
+    load_ytid();
+</script>
+<script>
+
+</script>
+
+</html>
