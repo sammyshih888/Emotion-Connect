@@ -1,13 +1,4 @@
-# https://youtu.be/NJpS-sFGLng
-"""
-Live prediction of emotion, age, and gender using pre-trained models. 
-Uses haar Cascades classifier to detect face..
-then, uses pre-trained models for emotion, gender, and age to predict them from 
-live video feed. 
-Prediction is done using tflite models. 
-Note that tflite with optimization takes too long on Windows, so not even try.
-Try it on edge devices, including RPi. 
-"""
+
 
 from keras.models import load_model
 from time import sleep
@@ -19,6 +10,8 @@ import tensorflow as tf
 import tkinter as tk
 from PIL import Image, ImageTk
 import time
+from datetime import datetime
+import json
 
 
 
@@ -55,7 +48,10 @@ class Time_Seg:
     def show( self ):
         if self.end_time!=None:
             diff = (self.end_time - self.start_time)/1000000000
-            print( 'diff:',diff,' sec.')
+            t1 = datetime.fromtimestamp(int(self.start_time/1000000000))
+            t2 = datetime.fromtimestamp(int(self.end_time/1000000000))
+            
+            print( 'start:',t1,'  end:' , t2 ,' ==> diff:',diff,' sec.')
         pass
 
 class Track_Data:
@@ -85,7 +81,53 @@ class Track_Data:
                 else:
                     last_one.start_time = t 
                 
+    def to_json_obj(self):
+        result = self.data
+        json_obj = {}
+        for k in result:
+            # print(k,'====================')
+            json_obj[k]=[]
+            for item in result[k]:
+                json_obj[k].append({
+                    'start':item.start_time,
+                    'end':item.end_time
+                })
+        return json_obj
 
+    def export(self):
+        result = self.data
+        first =time.time_ns()
+        last = 0
+        num = 0
+        for k in result:
+            print('[',k,']')
+            for item in result[k]:
+                item.show()
+                num=num+1
+                if item.start_time < first:
+                    first = item.start_time
+                if item.end_time!=None and item.end_time > last:
+                    last = item.end_time
+        if num==0:
+            return
+
+        # file name
+        t1 = datetime.fromtimestamp(int(first/1000000000))
+        t2 = datetime.fromtimestamp(int(last/1000000000))            
+        file_name = t1.strftime("export_%Y-%m-%d_%H%M%S_")+t2.strftime("%H%M%S")+'.json'
+
+        print('export json .... start')
+        # Serializing json
+        json_object = json.dumps(track_data.to_json_obj(), indent=4)
+        # Writing to *.json
+        # file_name='abc.json'
+        with open(file_name, "w") as outfile:
+            outfile.write(json_object)
+        print('export json .... end')
+
+        # clean data
+        for cl in class_labels:
+            self.data[cl]=[]
 
 
 track_data = Track_Data()
@@ -98,14 +140,20 @@ def btn_on():
     print( 'btn on....')
     global on_off
     on_off='on'
+    global track_data
+    track_data = Track_Data()
 
 def btn_off():
     print( 'btn off....')
     global on_off
     on_off='off'
+    
 
 def btn_export():
     print( 'btn export....')
+    track_data.export()
+    
+
 
 window = tk.Tk()
 window.title('GUI')
@@ -130,9 +178,10 @@ label = tk.Label(vFrame)
 label.pack()
 vFrame.grid(row=2,column=0 , columnspan = 4, padx = 5, pady = 5)
 
-cap=cv2.VideoCapture(0)
+cap=cv2.VideoCapture(1)
 
 # Define function to show frame
+frame_count = 0
 def show_frames():
 
     ret,frame=cap.read()  
@@ -158,6 +207,7 @@ def show_frames():
             emotion_label=class_labels[emotion_preds.argmax()]  #find the label
             emotion_label_position=(x,y)
             cv2.putText(frame,emotion_label,emotion_label_position,cv2.FONT_HERSHEY_SIMPLEX,1,(0,255,0),2)
+            track_data.add_seg(emotion_label)
 
     if on_off=='off':
         btnOn['state']='active'
@@ -167,7 +217,7 @@ def show_frames():
         btnOff['state']='active'
         cv2.putText(frame,'[REC]',(20,40),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2)
 
-    track_data.add_seg('test')
+   
 
     # Get the latest frame and convert into Image
     frame= cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
@@ -178,6 +228,12 @@ def show_frames():
     label.configure(image=imgtk)
     # Repeat after an interval to capture continiously
     label.after(20, show_frames)
+
+    global frame_count
+    frame_count = frame_count+1
+    if frame_count > 10*50:# 10 sec.
+        # track_data.export()
+        frame_count = 0
 
 show_frames()
 window.mainloop()
