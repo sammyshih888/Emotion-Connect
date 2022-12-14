@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Audience Emotion Analysis</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/6ec3c90698.js" crossorigin="anonymous"></script>
+    <style>
+        .floating-block {
+            background: rgba(153, 205, 50, 0.99);
+            color: white;
+            width: 708px;
+            z-index: 100;
+            position: fixed;
+            top: 330px;
+            height: 50px;
+        }
+    </style>
+</head>
+
+<body style="margin: 10px; ">
+    <div class="row mb-3">
+        <div class="col-7">
+            <div class="card">
+                <div class="card-header">
+                    Video
+                </div>
+                <div class="card-body">
+                    <div class="form-row" style="margin-bottom:10px ;">
+                        <div class="col-2">
+                            <span>YouTube ID：</span>
+                        </div>
+                        <div class="col-4">
+                            <input type="text" value="T_uFMQGCZYg" class="form-control" id="ytid">
+                        </div>
+                        <div class="col-2">
+                            <button type="button" class="btn btn-secondary" onclick="loadYoutubeVideo();">
+                                Load
+                            </button>
+                        </div>
+                    </div>
+                    <!-- <div><button class="btn btn-sm btn-secondary" style="margin: 3px;" onclick="loadYoutubeVideo();">Load</button></div> -->
+                    <div id="player"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="card">
+                <div class="card-header">
+                    Export / Import Monitor Data
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-secondary" onclick="export_json();">Export (Full Monitor Data) to JSON</button>
+                    <hr>
+                    <div class="form-group">
+                        <label>Import JSON (Full Monitor Data)</label>
+                        <input id='monJson' type="file" class="form-control-file">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    Timeline
+                </div>
+                <div class="card-body">
+                    <div id="timeline-tooltip"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    Segments Data
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">start</th>
+                                <th scope="col">end</th>
+                                <th scope="col">timestamp (start~end) </th>
+                                <th scope="col">action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="row_data">
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+
+            <div class="card">
+                <div class="card-header">
+                    Import Emotion Tagging JSON File
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label></label>
+                        <input id='emoJson' type="file" class="form-control-file">
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class="card mt-3">
+                <div class="card-header">
+                    Emotion Tagging Data
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th scope="col">start</th>
+                                <th scope="col">end</th>
+                                <th scope="col">type</th>
+                                <th scope="col">action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="em_data">
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', { 'packages': ['timeline'] });
+    google.charts.setOnLoadCallback(draw_chart);
+
+    function text_to_list(txt_list) {
+        let tks = txt_list.split(',');
+        let list = [];
+        for (let item of tks) {
+            item = item.trim();
+            if (list.indexOf(item) < 0 && item.length > 0) {
+                list.push(item);
+            }
+        }
+        return list;
+    }
+    function draw_chart() {
+        var container = document.getElementById('timeline-tooltip');
+        var chart = new google.visualization.Timeline(container);
+        var dataTable = new google.visualization.DataTable();
+
+        dataTable.addColumn({ type: 'string', id: 'Type' });
+        dataTable.addColumn({ type: 'string', role: 'tooltip' });
+        dataTable.addColumn({ type: 'date', id: 'Start' });
+        dataTable.addColumn({ type: 'date', id: 'End' });
+
+        let its = document.getElementById('row_data').getElementsByTagName('tr');
+        let rows = [];
+        for (let elt of its) {
+            let start = elt.getElementsByTagName('td')[0].textContent;
+            let start_info = start.split(':');
+            let end = elt.getElementsByTagName('td')[1].textContent;
+            let end_info = end.split(':');
+            let etype = 'seg';
+            rows.push(
+                [etype, etype,
+                    new Date(0, 0, 0, 0, parseInt(start_info[0]), parseFloat(start_info[1])),
+                    new Date(0, 0, 0, 0, parseInt(end_info[0]), parseFloat(end_info[1]))]
+            );
+        }
+
+        //=============
+        its = document.getElementById('em_data').getElementsByTagName('tr');
+
+        for (let elt of its) {
+            let start = elt.getElementsByTagName('td')[0].textContent;
+            let start_info = start.split(':');
+            let end = elt.getElementsByTagName('td')[1].textContent;
+            let end_info = end.split(':');
+            let etype = elt.getElementsByTagName('td')[2].textContent;
+
+            let tlist = text_to_list(etype);
+
+            for (let it of tlist) {
+                if (parseInt(start_info[0]) < 0) {
+                    continue;
+                }
+                if (parseInt(end_info[0]) < 0) {
+                    continue;
+                }
+                rows.push(
+                    [it, it,
+                        new Date(0, 0, 0, 0, parseInt(start_info[0]), parseFloat(start_info[1])),
+                        new Date(0, 0, 0, 0, parseInt(end_info[0]), parseFloat(end_info[1]))]
+                );
+            }
+        }
+        if (rows.length > 0) {
+            dataTable.addRows(rows);
+            chart.draw(dataTable);
+        }
+    }
+
+    /////////////////////////////////////////////////////
+    // youtuber player
+    /////////////////////////////////////////////////////
+    var stoptime = 5;
+    var player;
+    var ytid;
+    // 2. This code loads the IFrame Player API code asynchronously.
+    function loadYoutubeVideo() {
+        var tag = document.createElement("script");
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName("script")[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        ytid = document.getElementById('ytid').value;
+    }
+
+    // 3. This function creates an <iframe> (and YouTube player)
+    //    after the API code downloads.
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player("player", {
+            height: "398",
+            width: "707",
+            videoId: ytid,
+            events: {
+                onReady: onPlayerReady,
+                onStateChange: onPlayerStateChange,
+            },
+        });
+    }
+
+    // 4. The API will call this function when the video player is ready.
+    function onPlayerReady(event) {
+        // event.target.seekTo(0);
+        //event.target.playVideo();
+    }
+
+    // 5. The API calls this function when the player's state changes.
+    //    The function indicates that when playing a video (state=1),
+    //    the player should play for six seconds and then stop.
+    var done = false;
+
+    var t1 = '';
+    var t1_tstamp = '';
+    function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+            //setTimeout(stopVideo, stoptime * 1000);
+            done = true;
+        }
+        console.log(event.data + "==>" + player.getCurrentTime().toFixed(2) + "==>" + new Date().getTime());
+        //         -1 (unstarted)
+        // 0 (ended)
+        // 1 (playing)
+        // 2 (paused)
+        // 3 (buffering)
+        // 5 (video cued).        
+        if (event.data == 1) {
+            t1 = transfer(player.getCurrentTime().toFixed(2));
+            t1_tstamp = new Date().getTime();
+        } else if (t1 != '' && (event.data == 2 || event.data == 0)) {
+            let t2 = transfer(player.getCurrentTime().toFixed(2));
+            let t2_tstamp = new Date().getTime();
+            add_label(t1, t1_tstamp, t2, t2_tstamp);
+            t1 = '';
+            t1_tstamp = '';
+        }
+    }
+
+    function transfer(tt) {
+        var sec = tt;
+        var min = Math.floor(sec / 60);
+        sec = sec % 60;
+        if (sec < 10) {
+            sec = "0" + sec;
+        }
+        return min + ":" + sec;
+    }
+
+    function stopVideo() {
+        //player.stopVideo();
+        player.pauseVideo();
+    }
+
+    function seek(ss, stops) {
+        player.playVideo();
+        player.seekTo(ss);
+        // setTimeout(stopVideo, stops * 1000);
+    }
+
+    function setEmtType(elt) {
+        // console.log(elt);
+        let t = elt.textContent.trim();
+        document.getElementById('emotion_type').value = t;
+    }
+
+    function removeItem(elt) {
+        let trElt = elt.parentElement.parentElement;
+        trElt.remove();
+        save_rowdata();
+        save_ytid();
+        draw_chart();
+
+    }
+
+    function add_label(t1, t1_tstamp, t2, t2_tstamp) {
+
+
+        let row = `<tr><td>${t1}</td><td>${t2}</td><td>${t1_tstamp},${t2_tstamp}</td><td><button type="button" class="btn btn-danger btn-sm" onclick="removeItem(this);"><i class="fas fa-trash"></i></button></td></tr>`;
+        let elt = document.getElementById('row_data');
+        elt.innerHTML = elt.innerHTML + row;
+
+        save_rowdata();
+        save_ytid();
+        draw_chart();
+    }
+
+    function add_emotion_label(start_time, end_time, em_type) {
+        if (start_time == null) {
+            return;
+        }
+        if (end_time == null) {
+            return;
+        }
+        if (em_type == null) {
+            return;
+        }
+
+        var sl = '' + start_time;
+        if (sl.length > 13) {
+            sl = sl.substring(0, 13);
+        }
+        sl = parseInt(sl);
+        sl = map_time(sl);
+        var el = '' + end_time;
+        if (el.length > 13) {
+            el = el.substring(0, 13);
+        }
+        el = parseInt(el);
+        el = map_time(el);
+        var text = em_type;
+
+        let row = `<tr><td>${sl}</td><td>${el}</td><td>${text}</td><td><button type="button" class="btn btn-danger btn-sm" onclick="removeItem(this);"><i class="fas fa-trash"></i></button></td></tr>`;
+        let elt = document.getElementById('em_data');
+        elt.innerHTML = elt.innerHTML + row;
+
+        // save_rowdata();
+        // save_ytid();
+        // draw_chart();
+    }
+
+    function save_rowdata() {
+        let saveContent = document.getElementById('row_data').innerHTML
+        localStorage.setItem('row_data_monitor', saveContent);
+
+    }
+    function load_rowdata() {
+        let row_data = localStorage.getItem('row_data_monitor');
+        if (row_data != null) {
+            document.getElementById('row_data').innerHTML = row_data;
+        }
+    }
+
+    function timestr_to_sec(str) {
+        let d = str.split(':');
+        let sec = parseFloat(d[1]);
+        let min = parseInt(d[0]);
+        sec = sec + min * 60;
+        return sec;
+    }
+
+    function map_time(target_timestamp) {
+        let its = document.getElementById('row_data').getElementsByTagName('tr');
+        let rows = [];
+
+        if (its != undefined) {
+
+            for (let elt of its) {
+                console.log(elt);
+                let start = elt.getElementsByTagName('td')[0].textContent;
+                let start_time = timestr_to_sec(start);
+                //let start_time = 
+                let end = elt.getElementsByTagName('td')[1].textContent;
+                let end_time = timestr_to_sec(end);
+
+                let stamp = elt.getElementsByTagName('td')[2].textContent.split(',');
+                let stamp_start = parseInt(stamp[0]);
+                let stamp_end = parseInt(stamp[1]);
+                if (target_timestamp >= stamp_start && target_timestamp < stamp_end) {
+                    // found segment
+                    // interpolation
+                    let result = start_time + (end_time - start_time) * (target_timestamp - stamp_start) / (stamp_end - stamp_start);
+                    let min = 0;
+                    if (result >= 60) {
+                        min = Math.floor(result / 60);
+                        result = result % 60;
+                    }
+                    return min + ":" + result;
+                }
+
+                rows.push({
+                    ts_start: stamp_start,
+                    ts_end: stamp_end,
+                    time_start: start_time,
+                    time_end: end_time
+                });
+            }
+            console.log(rows);
+
+            // target_timestamp can't map!
+            return -1;
+
+        }
+    }
+
+    function save_ytid() {
+        let saveContent = document.getElementById('ytid').value;
+        localStorage.setItem('ytid_monitor', saveContent);
+    }
+    function load_ytid() {
+        ytid = localStorage.getItem('ytid_monitor');
+        if (ytid != null) {
+            document.getElementById('ytid').value = ytid;
+        }
+    }
+
+    function export_json() {
+        let its = document.getElementById('em_data').getElementsByTagName('tr');
+        
+        let jsonObjs = { 'ytid': ytid, 'em_tags': [],'segments':[] };
+
+        if (its != undefined) {
+            for (let elt of its) {
+                let start = elt.getElementsByTagName('td')[0].textContent;               
+                let end = elt.getElementsByTagName('td')[1].textContent;                
+                let etype = elt.getElementsByTagName('td')[2].textContent;
+
+                if( start=='-1' || end =='-1'){
+                    continue ;
+                }
+                
+                jsonObjs.em_tags.push({
+                    stime: start,
+                    etime: end,
+                    emotion: etype
+                });
+            }   
+        }
+
+        its = document.getElementById('row_data').getElementsByTagName('tr');
+        if(its != undefined ){        
+            for (let elt of its) {
+                let start = elt.getElementsByTagName('td')[0].textContent;                
+                let end = elt.getElementsByTagName('td')[1].textContent;
+
+                jsonObjs.segments.push({
+                    stime: start,
+                    etime: end,
+                    emotion: 'seg'
+                });                
+               
+            }
+        }        
+        let data = JSON.stringify(jsonObjs);
+        let type = "application/json";
+        let name = ytid + '_export.json';
+        let blob = new Blob([data], { type });
+        let url = window.URL.createObjectURL(blob);
+
+        let link = document.createElement("a");
+        link.download = name;
+        link.href = url;
+        link.click();
+
+        window.URL.revokeObjectURL(url);
+    }
+    
+    /////////////////////////////
+    load_rowdata();
+    load_ytid();
+</script>
+<script>
+
+    //=========================
+    // import emotion tagging json-file
+    //=========================
+    document.getElementById("emoJson").addEventListener("change", handleFile, false);
+    function handleFile() {
+        // console.log(this.files[0].name); /* now you can work with the file list */
+        // console.log(this.files[0]);
+        const promise1 = this.files[0].text();
+        promise1.then((value) => {
+            // console.log(value);
+            let dataObj = JSON.parse(value);
+
+            for (emt in dataObj) {
+                for (it of dataObj[emt]) {
+                    // console.log(emt + '----------');
+                    // console.log(it);
+                    add_emotion_label(it.start, it.end, emt);
+                }
+            }
+
+            draw_chart();
+
+            
+        });
+
+    }
+
+
+    //=========================
+    // import monitor json-file
+    //=========================
+    document.getElementById("monJson").addEventListener("change", handleFile2, false);
+    function handleFile2() {
+        // console.log(this.files[0].name); /* now you can work with the file list */
+        // console.log(this.files[0]);
+        const promise1 = this.files[0].text();
+        promise1.then((value) => {
+            // console.log(value);
+            let dataObj = JSON.parse(value);
+            //let jsonObjs = { 'ytid': ytid, 'em_tags': [],'segments':[] };
+
+            // set ytid
+            let yid = dataObj.ytid ;
+
+
+            // set segments
+            for(segItem of dataObj.segments){
+                let row = `<tr><td>${segItem.stime}</td><td>${segItem.etime}</td><td>-,-</td><td><button type="button" class="btn btn-danger btn-sm" onclick="removeItem(this);"><i class="fas fa-trash"></i></button></td></tr>`;
+                let elt = document.getElementById('row_data');
+                elt.innerHTML = elt.innerHTML + row;
+            }
+
+
+            // set emotion tags
+            for (emItem of dataObj.em_tags) {
+                // jsonObjs.em_tags.push({
+                //     stime: start,
+                //     etime: end,
+                //     emotion: etype
+                // });                  
+                    
+                let row = `<tr><td>${emItem.stime}</td><td>${emItem.etime}</td><td>${emItem.emotion}</td><td><button type="button" class="btn btn-danger btn-sm" onclick="removeItem(this);"><i class="fas fa-trash"></i></button></td></tr>`;
+                let elt = document.getElementById('em_data');
+                elt.innerHTML = elt.innerHTML + row;
+                
+            }
+
+            draw_chart();
+
+            
+        });
+
+    }
+</script>
+
+</html>
