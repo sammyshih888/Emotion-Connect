@@ -1,0 +1,595 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="tv2-pd-mUb">
+    <device id="retina6_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="ARKit_CoreML_Emotion_Classification" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="xyc-ZT-lkC"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2913" y="435"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="sKj-3F-JVL">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="tv2-pd-mUb" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="tec-Hr-QmT">
+                        <rect key="frame" x="0.0" y="47" width="428" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="2xH-pZ-jqO" kind="relationship" relationship="rootViewController" id="hDD-mi-sYx"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SUG-pz-q3w" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="139.69465648854961" y="-2.1126760563380285"/>
+        </scene>
+        <!--Menu View Controller-->
+        <scene sceneID="H8E-Kx-vpW">
+            <objects>
+                <viewController id="2xH-pZ-jqO" customClass="MenuViewController" customModule="ARKit_CoreML_Emotion_Classification" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iIt-W5-OZV">
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="Key-z6-2hd">
+                                <rect key="frame" x="0.0" y="91" width="428" height="843"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="31j-kM-Tnd">
+                                <rect key="frame" x="40" y="231.66666666666669" width="348" height="518.33333333333326"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="Bvr-Xq-bHX">
+                                        <rect key="frame" x="24" y="0.0" width="300" height="112"/>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="pw5-5R-JDZ">
+                                        <rect key="frame" x="30" y="144" width="288" height="294"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jy9-Wq-ZfI">
+                                                <rect key="frame" x="0.0" y="0.0" width="288" height="64"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title="識別 - 前鏡頭 Recognize Front">
+                                                    <imageReference key="image" image="faceid" catalog="system" symbolScale="default" variableValue="1"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="42"/>
+                                                    <fontDescription key="titleFontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="20"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <segue destination="BYZ-38-t0r" kind="show" id="uQs-3r-UIa"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="azc-nD-WY4">
+                                                <rect key="frame" x="0.0" y="84" width="288" height="64"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title="識別 - 後鏡頭 Recognize Back">
+                                                    <imageReference key="image" image="faceid" catalog="system" symbolScale="default" variableValue="1"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="42"/>
+                                                    <fontDescription key="titleFontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="20"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <segue destination="0aM-fb-YZk" kind="show" id="fmG-PT-AY5"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IlD-KN-w9b">
+                                                <rect key="frame" x="0.0" y="167.99999999999994" width="288" height="64"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title="  測驗 Quiz">
+                                                    <imageReference key="image" image="square.and.pencil" catalog="system" symbolScale="default"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="42"/>
+                                                    <fontDescription key="titleFontDescription" name="ArialRoundedMTBold" family="Arial Rounded MT Bold" pointSize="24"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <segue destination="MBQ-Qo-jJh" kind="show" id="Ogy-XI-4Pt"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kjw-tw-J6O">
+                                                <rect key="frame" x="0.0" y="251.99999999999994" width="288" height="42"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="關於 EM TOUCH.">
+                                                    <fontDescription key="titleFontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="24"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <segue destination="oi3-oC-aik" kind="show" id="iWJ-KA-1Hp"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="rno-7C-X4P">
+                                        <rect key="frame" x="43.333333333333343" y="470" width="261.33333333333326" height="48.333333333333371"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="created by sammyshih888" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="twA-Rz-d2j">
+                                                <rect key="frame" x="14.000000000000014" y="0.0" width="233.33333333333337" height="24"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="https://github.com/sammyshih888" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WcQ-LD-7Ta">
+                                                <rect key="frame" x="0.0" y="28" width="261.33333333333331" height="20.333333333333329"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <color key="textColor" systemColor="tintColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="pw5-5R-JDZ" firstAttribute="leading" secondItem="31j-kM-Tnd" secondAttribute="leading" constant="30" id="j9g-zE-tY1"/>
+                                    <constraint firstAttribute="trailing" secondItem="pw5-5R-JDZ" secondAttribute="trailing" constant="30" id="wku-Er-PLb"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="v9B-d3-hyq"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="v9B-d3-hyq" firstAttribute="trailing" secondItem="31j-kM-Tnd" secondAttribute="trailing" constant="40" id="EeF-Cl-OXO"/>
+                            <constraint firstItem="azc-nD-WY4" firstAttribute="centerY" secondItem="v9B-d3-hyq" secondAttribute="centerY" id="Rmb-TZ-cUC"/>
+                            <constraint firstItem="Key-z6-2hd" firstAttribute="top" secondItem="v9B-d3-hyq" secondAttribute="top" id="ar4-R0-9ER"/>
+                            <constraint firstItem="31j-kM-Tnd" firstAttribute="centerX" secondItem="v9B-d3-hyq" secondAttribute="centerX" id="cRd-PY-EQe"/>
+                            <constraint firstItem="v9B-d3-hyq" firstAttribute="bottom" secondItem="Key-z6-2hd" secondAttribute="bottom" constant="-42" id="pma-dT-j0k"/>
+                            <constraint firstItem="v9B-d3-hyq" firstAttribute="trailing" secondItem="Key-z6-2hd" secondAttribute="trailing" id="uxV-bO-2fG"/>
+                            <constraint firstItem="Key-z6-2hd" firstAttribute="leading" secondItem="v9B-d3-hyq" secondAttribute="leading" id="zZV-DD-WrX"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Nap-eu-9gC"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3tP-dg-vee" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1057.2519083969464" y="-60.563380281690144"/>
+        </scene>
+        <!--Quiz View Controller-->
+        <scene sceneID="SCK-Hk-crr">
+            <objects>
+                <viewController id="LnD-uY-Odw" customClass="QuizViewController" customModule="ARKit_CoreML_Emotion_Classification" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mrI-aA-wcq">
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg2" translatesAutoresizingMaskIntoConstraints="NO" id="quM-9V-9st">
+                                <rect key="frame" x="0.0" y="47" width="428" height="888"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="hsD-2m-YU7">
+                                <rect key="frame" x="36.333333333333343" y="97" width="355.33333333333326" height="496"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="hRE-pB-O1n">
+                                        <rect key="frame" x="0.0" y="0.0" width="355.33333333333331" height="180"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lsl-Pz-9gZ">
+                                                <rect key="frame" x="0.0" y="66.333333333333343" width="65.666666666666671" height="47.333333333333343"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" image="arrow.backward.circle" catalog="system" title="">
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="28"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="pre_button:" destination="LnD-uY-Odw" eventType="touchUpInside" id="xWm-D8-ucp"/>
+                                                </connections>
+                                            </button>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="A0" translatesAutoresizingMaskIntoConstraints="NO" id="rDt-ka-PTE">
+                                                <rect key="frame" x="87.666666666666657" y="0.0" width="179.99999999999997" height="180"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="180" id="7mq-3v-6DD"/>
+                                                    <constraint firstAttribute="height" constant="180" id="OvN-r2-s5S"/>
+                                                </constraints>
+                                            </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="42o-lZ-aM1">
+                                                <rect key="frame" x="289.66666666666669" y="66.333333333333343" width="65.666666666666686" height="47.333333333333343"/>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="plain" image="arrow.forward.circle" catalog="system" title="">
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="28"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="next_button:" destination="LnD-uY-Odw" eventType="touchUpInside" id="uZb-vN-7rK"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8lA-0f-u8A">
+                                        <rect key="frame" x="140.66666666666666" y="202" width="74.333333333333343" height="22"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Button" image="faceid" catalog="system">
+                                            <color key="titleColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="dju-zY-lYz">
+                                        <rect key="frame" x="85.333333333333357" y="246" width="184.66666666666663" height="50"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9gj-5E-H7R">
+                                                <rect key="frame" x="0.0" y="0.0" width="86.333333333333329" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="Kef-1G-aFD"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="gray" image="face.smiling" catalog="system" title="LBtn">
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
+                                                    <color key="baseForegroundColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="left_opt_button:" destination="LnD-uY-Odw" eventType="touchUpInside" id="mq2-8E-oDa"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zdv-Al-nGz">
+                                                <rect key="frame" x="98.333333333333343" y="0.0" width="86.333333333333343" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="Ml9-cr-mtb"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="gray" image="face.dashed" catalog="system" title="RBtn">
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
+                                                    <color key="baseForegroundColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </buttonConfiguration>
+                                                <connections>
+                                                    <action selector="right_opt_button:" destination="LnD-uY-Odw" eventType="touchUpInside" id="xfK-HM-Kmj"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="Zdv-Al-nGz" firstAttribute="width" secondItem="9gj-5E-H7R" secondAttribute="width" id="1Kd-sd-oIy"/>
+                                            <constraint firstItem="Zdv-Al-nGz" firstAttribute="height" secondItem="9gj-5E-H7R" secondAttribute="height" id="GsZ-3h-B6u"/>
+                                        </constraints>
+                                    </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N9s-h0-Pbv">
+                                        <rect key="frame" x="152.66666666666666" y="318" width="50" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00 / 00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RGj-II-t5B">
+                                        <rect key="frame" x="137.66666666666666" y="390" width="80" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="APN-79-TJE"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Eje-TM-urC">
+                                        <rect key="frame" x="97.666666666666657" y="436" width="159.99999999999997" height="60"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="160" id="Bn7-n5-kvy"/>
+                                            <constraint firstAttribute="height" constant="60" id="ZJb-Ig-k5p"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="結  果 Result">
+                                            <color key="baseBackgroundColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="save_result:" destination="LnD-uY-Odw" eventType="touchUpInside" id="5LO-GP-cnv"/>
+                                            <segue destination="OiA-qM-eMB" kind="show" id="cBT-Wr-oTB"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="TuJ-nW-Lwo"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="TuJ-nW-Lwo" firstAttribute="trailing" secondItem="quM-9V-9st" secondAttribute="trailing" id="BgY-0x-jFJ"/>
+                            <constraint firstItem="hsD-2m-YU7" firstAttribute="top" secondItem="TuJ-nW-Lwo" secondAttribute="top" constant="50" id="E4L-RJ-7um"/>
+                            <constraint firstItem="hsD-2m-YU7" firstAttribute="centerX" secondItem="TuJ-nW-Lwo" secondAttribute="centerX" id="QhH-SM-C12"/>
+                            <constraint firstItem="quM-9V-9st" firstAttribute="leading" secondItem="TuJ-nW-Lwo" secondAttribute="leading" id="bxf-Jj-Dl7"/>
+                            <constraint firstItem="TuJ-nW-Lwo" firstAttribute="bottom" secondItem="quM-9V-9st" secondAttribute="bottom" constant="-43" id="jQ5-bo-U7b"/>
+                            <constraint firstItem="quM-9V-9st" firstAttribute="top" secondItem="TuJ-nW-Lwo" secondAttribute="top" id="qEC-0s-VhY"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="YaU-y4-rs1"/>
+                    <connections>
+                        <outlet property="finish_button" destination="Eje-TM-urC" id="Fn4-1e-W7b"/>
+                        <outlet property="optbtn_left" destination="9gj-5E-H7R" id="GWg-Ge-pra"/>
+                        <outlet property="optbtn_right" destination="Zdv-Al-nGz" id="MXr-tt-4mh"/>
+                        <outlet property="qno_label" destination="RGj-II-t5B" id="Ecq-gz-1uR"/>
+                        <outlet property="target_button" destination="8lA-0f-u8A" id="M1f-Fi-EDJ"/>
+                        <outlet property="target_img" destination="rDt-ka-PTE" id="jrL-rf-eo9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Tti-JP-DpZ" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1123" y="805"/>
+        </scene>
+        <!--About View Controller-->
+        <scene sceneID="pER-A9-Pzn">
+            <objects>
+                <viewController id="oi3-oC-aik" customClass="AboutViewController" customModule="ARKit_CoreML_Emotion_Classification" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="MBQ-Xe-gaB">
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="RVk-5i-kpX">
+                                <rect key="frame" x="0.0" y="103" width="393" height="758"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="36" translatesAutoresizingMaskIntoConstraints="NO" id="CZi-M9-R15">
+                                <rect key="frame" x="64" y="100.99999999999997" width="300" height="482.33333333333326"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="EXk-WB-TJJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="112"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="miX-qc-0Iz">
+                                        <rect key="frame" x="0.0" y="147.99999999999997" width="300" height="334.33333333333326"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="300" id="uyH-tV-XmD"/>
+                                        </constraints>
+                                        <string key="text">這個應用程式通過練習表達和識別情緒來幫助用戶改善社交互動。
+
+This app helps the user improve social interaction through practice of both expression and recognition of emotions.</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="1pD-w8-Kal"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="1pD-w8-Kal" firstAttribute="top" secondItem="CZi-M9-R15" secondAttribute="top" constant="-10" id="Ine-0l-Xn2"/>
+                            <constraint firstItem="CZi-M9-R15" firstAttribute="centerX" secondItem="1pD-w8-Kal" secondAttribute="centerX" id="ift-PG-Y3j"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="cLm-RV-nje"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Gvm-Kc-25H" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2111" y="843"/>
+        </scene>
+        <!--Result View Controller-->
+        <scene sceneID="RKv-DC-VDU">
+            <objects>
+                <viewController id="OiA-qM-eMB" customClass="ResultViewController" customModule="ARKit_CoreML_Emotion_Classification" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hh2-a8-cds">
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="916"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="bg" translatesAutoresizingMaskIntoConstraints="NO" id="B7j-Cb-0E8">
+                                <rect key="frame" x="0.0" y="103" width="393" height="758"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="YII-ZH-33A">
+                                <rect key="frame" x="64" y="26" width="300" height="535.66666666666663"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7R7-B8-RqR">
+                                        <rect key="frame" x="12" y="0.0" width="276" height="43.666666666666664"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title=" 練習結果 Quiz Result " image="rectangle.portrait.on.rectangle.portrait.angled" catalog="system">
+                                            <color key="titleColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleShadowColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
+                                        </state>
+                                        <buttonConfiguration key="configuration" style="plain" image="rectangle.portrait.on.rectangle.portrait.angled" catalog="system" title=" 練習結果 Quiz Result ">
+                                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="24"/>
+                                            <fontDescription key="titleFontDescription" type="system" pointSize="22"/>
+                                            <color key="baseForegroundColor" red="1" green="0.49327188729999999" blue="0.47399842739999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </buttonConfiguration>
+                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="GVf-7B-L6X">
+                                        <rect key="frame" x="0.0" y="75.666666666666671" width="300" height="50"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="開心 Happy 100%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfu-dt-DqO">
+                                                <rect key="frame" x="0.0" y="0.0" width="144" height="46"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <progressView opaque="NO" contentMode="left" verticalHuggingPriority="750" progress="1" translatesAutoresizingMaskIntoConstraints="NO" id="TvW-6P-OYQ">
+                                                <rect key="frame" x="0.0" y="45.999999999999986" width="280" height="4"/>
+                                                <color key="tintColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="280" id="8kk-go-Lgf"/>
+                                                </constraints>
+                                            </progressView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="EC5-3K-ZZw"/>
+                                            <constraint firstAttribute="width" constant="300" id="pyC-QZ-PHj"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="oqE-lV-K2J">
+                                        <rect key="frame" x="0.0" y="157.66666666666666" width="300" height="50"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="開心 Happy 100%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="72m-bH-AI5">
+                                                <rect key="frame" x="0.0" y="0.0" width="144" height="46"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <progressView opaque="NO" contentMode="left" verticalHuggingPriority="750" progress="1" translatesAutoresizingMaskIntoConstraints="NO" id="j3i-CX-hbT">
+                                                <rect key="frame" x="0.0" y="46" width="280" height="4"/>
+                                                <color key="tintColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="280" id="SPf-Eo-zqf"/>
+                                                </constraints>
+                                            </progressView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="pFc-YG-KBs"/>
+                                            <constraint firstAttribute="width" constant="300" id="xrf-L2-8wW"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="wii-Jx-KnN">
+                                        <rect key="frame" x="0.0" y="239.66666666666669" width="300" height="50"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="開心 Happy 100%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dH7-0m-Xzu">
+                                                <rect key="frame" x="0.0" y="0.0" width="144" height="46"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <progressView opaque="NO" contentMode="left" verticalHuggingPriority="750" progress="1" translatesAutoresizingMaskIntoConstraints="NO" id="5Z9-de-7d0">
+                                                <rect key="frame" x="0.0" y="46" width="280" height="4"/>
+                                                <color key="tintColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="280" id="sZB-Yb-lE2"/>
+                                                </constraints>
+                                            </progressView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="Lbj-aQ-a1a"/>
+                                            <constraint firstAttribute="width" constant="300" id="SE5-Uh-DxM"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Edq-Oo-xQF">
+                                        <rect key="frame" x="0.0" y="321.66666666666669" width="300" height="50"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="開心 Happy 100%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JM5-l2-cFX">
+                                                <rect key="frame" x="0.0" y="0.0" width="144" height="46"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <progressView opaque="NO" contentMode="left" verticalHuggingPriority="750" progress="0.29999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="4S2-yv-fhz">
+                                                <rect key="frame" x="0.0" y="46" width="280" height="4"/>
+                                                <color key="tintColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="280" id="yaO-tI-dgG"/>
+                                                </constraints>
+                                            </progressView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="300" id="rnW-uV-j6m"/>
+                                            <constraint firstAttribute="height" constant="50" id="wbO-lD-FYa"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="09Z-O3-EOD">
+                                        <rect key="frame" x="0.0" y="403.66666666666669" width="300" height="50"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="開心 Happy 100%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFb-0O-qJd">
+                                                <rect key="frame" x="0.0" y="0.0" width="144" height="46"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <progressView opaque="NO" contentMode="left" verticalHuggingPriority="750" progress="1" translatesAutoresizingMaskIntoConstraints="NO" id="oA9-GE-87Q">
+                                                <rect key="frame" x="0.0" y="46" width="280" height="4"/>
+                                                <color key="tintColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="280" id="ZY2-9p-CAO"/>
+                                                </constraints>
+                                            </progressView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="300" id="5BJ-gv-e6C"/>
+                                            <constraint firstAttribute="height" constant="50" id="8cG-GP-fpr"/>
+                                        </constraints>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Yqj-4x-tgF">
+                                        <rect key="frame" x="0.0" y="485.66666666666669" width="300" height="50.000000000000057"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="開心 Happy 100%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pyO-fM-q1c">
+                                                <rect key="frame" x="0.0" y="0.0" width="144" height="46"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <progressView opaque="NO" contentMode="left" verticalHuggingPriority="750" progress="1" translatesAutoresizingMaskIntoConstraints="NO" id="pLT-45-g0l">
+                                                <rect key="frame" x="0.0" y="45.999999999999943" width="280" height="4"/>
+                                                <color key="tintColor" red="1" green="0.57810515169999999" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="280" id="iqb-Ts-L7v"/>
+                                                </constraints>
+                                            </progressView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="6NL-ac-S1C"/>
+                                            <constraint firstAttribute="width" constant="300" id="vn6-Sa-Kkj"/>
+                                        </constraints>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="rka-x0-G3n"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="YII-ZH-33A" firstAttribute="centerX" secondItem="rka-x0-G3n" secondAttribute="centerX" id="pKt-jj-rh8"/>
+                            <constraint firstItem="rka-x0-G3n" firstAttribute="top" secondItem="YII-ZH-33A" secondAttribute="top" constant="-26" id="uG3-vw-Vkd"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="rYo-V0-ZZR"/>
+                    <connections>
+                        <outlet property="lb_angry" destination="72m-bH-AI5" id="abx-Zk-d4r"/>
+                        <outlet property="lb_disgust" destination="dH7-0m-Xzu" id="xo2-T9-9Qd"/>
+                        <outlet property="lb_fear" destination="JM5-l2-cFX" id="pSv-Bv-KCb"/>
+                        <outlet property="lb_happy" destination="bfu-dt-DqO" id="x9v-Q3-uhV"/>
+                        <outlet property="lb_sad" destination="mFb-0O-qJd" id="9aD-9v-J5M"/>
+                        <outlet property="lb_surprised" destination="pyO-fM-q1c" id="NRV-Tr-TnB"/>
+                        <outlet property="pg_angry" destination="j3i-CX-hbT" id="j0j-Yc-Nh1"/>
+                        <outlet property="pg_disgust" destination="5Z9-de-7d0" id="5Cs-Pv-Hy1"/>
+                        <outlet property="pg_fear" destination="4S2-yv-fhz" id="kyt-QT-9h0"/>
+                        <outlet property="pg_happy" destination="TvW-6P-OYQ" id="j5d-ZU-bCc"/>
+                        <outlet property="pg_sad" destination="oA9-GE-87Q" id="1bQ-3M-Pm2"/>
+                        <outlet property="pg_surprised" destination="pLT-45-g0l" id="aeS-wd-3cs"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tFy-su-Ghk" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1056" y="1666"/>
+        </scene>
+        <!--Vision Object Recognition View Controller-->
+        <scene sceneID="i4m-Eb-Pwu">
+            <objects>
+                <viewController id="0aM-fb-YZk" customClass="VisionObjectRecognitionViewController" customModule="ARKit_CoreML_Emotion_Classification" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="prJ-jx-xWh">
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="0iA-VT-rM8"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="pH8-F8-o68"/>
+                    <connections>
+                        <outlet property="previewView" destination="prJ-jx-xWh" id="NDC-qx-nMB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VGb-e5-4pu" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2945" y="-317"/>
+        </scene>
+        <!--Swiftui View Controller-->
+        <scene sceneID="ZWE-rO-fP3">
+            <objects>
+                <hostingController id="MBQ-Qo-jJh" customClass="SwiftuiViewController" customModule="ARKit_CoreML_Emotion_Classification" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="rzI-X9-N5a"/>
+                </hostingController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="O3z-KM-QcF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1001" y="-746"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="A0" width="48" height="48"/>
+        <image name="arrow.backward.circle" catalog="system" width="128" height="123"/>
+        <image name="arrow.forward.circle" catalog="system" width="128" height="123"/>
+        <image name="bg" width="1010" height="2195"/>
+        <image name="bg2" width="1050" height="2100"/>
+        <image name="face.dashed" catalog="system" width="128" height="123"/>
+        <image name="face.smiling" catalog="system" width="128" height="123"/>
+        <image name="faceid" catalog="system" width="128" height="115"/>
+        <image name="logo" width="300" height="112"/>
+        <image name="rectangle.portrait.on.rectangle.portrait.angled" catalog="system" width="120" height="128"/>
+        <image name="square.and.pencil" catalog="system" width="128" height="113"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
